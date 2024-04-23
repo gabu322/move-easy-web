@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  word-wrap: break-word;
+}
+
+body {
+  /* background-color: #eff8ff; */
+  /* overflow: hidden; */
+  @apply bg-[#F8F8F8];
+  height: 100%;
+}
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.nav {
+  @apply w-full h-16 bg-white flex justify-between items-center p-4 shadow-sm;
+}
+
+.main {
+  @apply w-full sm:w-4/5 lg:w-2/3 xl:w-3/5 m-auto mb-4 p-10 items-center mt-5 relative bg-white rounded-xl shadow-md;
+}
+
+.card {
+  @apply bg-white p-8 rounded-xl shadow-md;
+}
+
+.cardTitle {
+  @apply text-2xl font-bold;
+}
+.flex-c-2 {
+  @apply flex flex-col gap-2;
+}
+
+.flex-r-2 {
+  @apply flex flex-row gap-2;
+}
+
+.flex-c-4 {
+  @apply flex flex-col gap-4;
+}
+
+.flex-r-4 {
+  @apply flex flex-row gap-4;
+}
+
+.flex-c-6 {
+  @apply flex flex-col gap-6;
+}
+
+.flex-r-6 {
+  @apply flex flex-row gap-6;
+}
+
+.flex-c-8 {
+  @apply flex flex-col gap-8;
+}
+
+.flex-r-8 {
+  @apply flex flex-row gap-8;
+}
+
+.flex-c-10 {
+  @apply flex flex-col gap-10;
+}
+
+.flex-r-10 {
+  @apply flex flex-row gap-10;
+}
+
+.center {
+  @apply justify-center items-center;
+}
