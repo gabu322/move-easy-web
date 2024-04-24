@@ -65,7 +65,6 @@ export default function Button({
         type={type ?? "button"}
         className={`px-3 rounded drop-shadow transition-all duration-200 cursor-pointer font-semibold text-sm flex-r-2 items-center justify-center ${color} ${textColor} ${className}`}
         style={{
-            width: width ?? "fit-content",
             whiteSpace: " nowrap",
             height: height ?? "40px",
             flex: "0 0 auto"

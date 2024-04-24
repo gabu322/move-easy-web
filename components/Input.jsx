@@ -15,7 +15,7 @@ export default function Input({
     options,
     getOptionInfo,
     isSearchable,
-    pattern,
+    underText,
     required
 }) {
 
@@ -68,7 +68,7 @@ export default function Input({
         onFocus: () => setIsFocused(true),
         onBlur: () => isSearchable ? "" : setIsFocused(false),
         onInvalid: (e) => {
-            if(value) return;
+            if (value) return;
             e.target.setCustomValidity("Este campo é obrigatório");
             setValid(false);
         },
@@ -180,11 +180,13 @@ export default function Input({
         correctLabel = true;
     }
 
-    return <div className={`relative ${!className || !className.includes("w-") ? "w-full" : ""} ${className}`} name={value}>
-
+    return <div className={`relative  ${className}`} name={value}>
+        {/* Input component */}
         {input}
-        <label htmlFor={htmlFor} style={{ zIndex: 1, }}
-            className={'absolute left-2 transition-all bg-white rounded whitespace-nowrap font-medium ' +
+
+        {/* Laber component */}
+        <label htmlFor={htmlFor}
+            className={'absolute left-2 transition-all bg-white rounded whitespace-nowrap font-medium z-10 ' +
                 ((isFocused || value || correctLabel) ? (sizes.labelSelected + ' cursor-default') : (sizes.labelUnselected + ' cursor-text')) +
                 ((isFocused) ? ' text-blue-500' : ' text-gray-400') +
                 (" ")
@@ -192,6 +194,9 @@ export default function Input({
         >
             {label}
         </label>
+
+        {/* Under text component */}
+        {underText && <div className="pt-0.5 text-xs text-left text-gray-400">{underText}</div>}
     </div>
 
 }
