@@ -10,41 +10,26 @@ export default function Input({
     label,
     onChange,
     size = "md",
-    initialValue,
+    initialValue = "",
     disabled,
     options,
     getOptionInfo,
     isSearchable,
     underText,
-    required
+    rounded = "",
+    required,
 }) {
+    const htmlFor = id || name || label;
 
     const [valid, setValid] = useState(true);
     const [value, setValue] = useState(initialValue);
+    const [isFocused, setIsFocused] = useState(false);
+    const [onOptions, setOnOptions] = useState(false);
+
     useEffect(() => {
         setValue(initialValue);
     }, [initialValue]);
 
-    let sizes;
-    if (size == "sm") {
-        sizes = {
-            base: "h-8 p-1.5 text-sm",
-            labelSelected: "-top-1.5 text-xs px-1",
-            labelUnselected: "top-1.5 text-sm",
-        }
-    } else if (size == "md") {
-        sizes = {
-            base: "h-10 p-2",
-            labelSelected: "-top-2 text-xs px-1",
-            labelUnselected: "top-2 text-base",
-        }
-    } else if (size == "lg") {
-        sizes = {
-            base: "h-12 p-3 text-xl",
-            labelSelected: "-top-3 text-sm px-1",
-            labelUnselected: "top-2.5 text-xl pl-1 ",
-        }
-    }
 
     const handleInputChange = (e) => {
         let newValue = e.target.value;
@@ -56,17 +41,13 @@ export default function Input({
         setValue(newValue);
         onChange({ target: { name, value: newValue } });
     };
-    const htmlFor = id || name;
 
-    const [isFocused, setIsFocused] = useState(false);
     const commonAttributes = {
         id: htmlFor,
         type: type,
         name: name,
-        value: value || '',
+        value: value,
         onChange: handleInputChange,
-        onFocus: () => setIsFocused(true),
-        onBlur: () => isSearchable ? "" : setIsFocused(false),
         onInvalid: (e) => {
             if (value) return;
             e.target.setCustomValidity("Este campo é obrigatório");
@@ -76,11 +57,9 @@ export default function Input({
             e.target.setCustomValidity("");
             setValid(true);
         },
-        className: "w-full outline-none border rounded transition border-gray-300 hover:border-blue-500 " + sizes.base + (isFocused ? " focus:border-blue-500 border-2 " : " ") +
-            (!valid ? " invalid:border-red-300" : ""),
+        className: `outline-none w-full h-full px-2 text-black ${(!valid ? " invalid:border-red-300" : "")}`,
         outline: "none",
         disabled: disabled,
-        // pattern: pattern || (type == "number" ? "[0-9]*" : ""),
         required: required
     };
 
@@ -89,15 +68,17 @@ export default function Input({
 
     if (isSearchable && options && options.length > 0) {
         input = (
-            <div onMouseLeave={() => setIsFocused(false)}
-                onClick={() => setIsFocused(true)}
+            <div
                 className="z-4"
             >
                 <input {...commonAttributes}
+                    className={`${commonAttributes.className} + h-full`}
                     autoComplete="off"
                 />
-                <div className={"absolute top-full left-0 w-full bg-white border border-gray-300 rounded max-h-60 overflow-y-auto transition-all z-10 " +
+                <div className={"absolute top-full translate-y-[-1px] left-0 w-full bg-white border border-gray-300 rounded-b max-h-60 overflow-y-auto transition-all z-10 " +
                     (isFocused ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none")}
+                    onMouseEnter={() => setOnOptions(true)}
+                    onMouseLeave={() => setOnOptions(false)}
                 >
                     {options.filter(option => option.name.toLowerCase().includes((value || '').toLowerCase())).map((option) => {
                         return <div
@@ -121,7 +102,7 @@ export default function Input({
                     onClick={() => {
                         setTimeout(() => {
                             setValue("")
-                            setIsFocused(false);
+
                         }, 0);
                     }}
                 >
@@ -152,16 +133,9 @@ export default function Input({
 
         correctLabel = true;
     } else if (type == "textarea") {
-        input = (<>
-            <textarea {...commonAttributes}
-                style={{
-                    height: "100%",
-                    paddingTop: "45px",
-                    backgroundColor: "white"
-                }}
-            />
-            <div className={'w-full h-10 border-b absolute top-0 flex flex-row gap-5 justify-start items-center pl-4 child:h-6 child:min-w-3  ' +
-                (isFocused ? "border-blue-500" : "border-b-gray-300")}
+        input = (<div className='flex flex-col w-full h-full'>
+            <div className={'w-full h-10 border-b flex flex-row gap-5 justify-start items-center p-2 pl-4 child:h-6 child:min-w-3  ' +
+                (isFocused ? "border-blue-500" : "")}
             >
                 <div className='font-bold'>B</div>
                 <div className='italic'>I</div>
@@ -176,21 +150,38 @@ export default function Input({
 
                 <div>{/* Separator */}</div>
             </div>
-        </>);
+            <textarea {...commonAttributes} className='resize-none w-full p-2 h-full outline-none' />
+
+        </div>);
         correctLabel = true;
     }
 
-    return <div className={`relative  ${className}`} name={value}>
+    return <div
+        className={`relative outline outline-1 outline-offset-[-1px] rounded transition box-border bg-white flex items-center hover:outline-blue-500 h-10 ${(isFocused ? " outline-blue-500 outline-2 " : "outline-gray-300")}  ${className} `}
+        name={value}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => {
+            if (!onOptions)
+                setIsFocused(false)
+        }}
+    >
+
+
         {/* Input component */}
         {input}
 
-        {/* Laber component */}
+        {/* Label component */}
         <label htmlFor={htmlFor}
-            className={'absolute left-2 transition-all bg-white rounded whitespace-nowrap font-medium z-10 ' +
-                ((isFocused || value || correctLabel) ? (sizes.labelSelected + ' cursor-default') : (sizes.labelUnselected + ' cursor-text')) +
-                ((isFocused) ? ' text-blue-500' : ' text-gray-400') +
-                (" ")
-            }
+            className={`absolute left-2 transition-all bg-white rounded whitespace-nowrap font-medium z-10  +
+                ${((isFocused || value || correctLabel)
+                    ? (' -top-2 text-xs px-1')
+                    : (" top-2 text-base")
+                )} +
+                ${isFocused
+                    ? ' text-blue-500'
+                    : ' text-gray-400'
+                }
+            `}
         >
             {label}
         </label>
