@@ -187,7 +187,7 @@ export default function Input({
         </label>
 
         {/* Under text component */}
-        {underText && <div className="pt-0.5 text-xs text-left text-gray-400">{underText}</div>}
+        {underText && <div className="absolute bottom-[-15px] text-xs text-left text-gray-400">{underText}</div>}
     </div>
 
 }

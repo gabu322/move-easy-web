@@ -12,8 +12,14 @@
 body {
   /* background-color: #eff8ff; */
   /* overflow: hidden; */
-  @apply bg-[#F8F8F8];
-  height: 100%;
+  /* @apply bg-[#F8F8F8];
+  height: 100%; */
+}
+
+
+
+main {
+  @apply w-full min-h-[86vh] mt-16 bg-gray-200;
 }
 /* For Webkit-based browsers (Chrome, Safari and Opera) */
 .scrollbar-hide::-webkit-scrollbar {
