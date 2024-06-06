@@ -14,8 +14,10 @@ export default function Page() {
 
     const handleLogin = async () => {
         try {
+            console.log("Teste")
             // Call your API to authenticate user
-            const response = await axios.post('/api/login', { username, password });
+            const response = await axios.post('/api/users?email=email@gmail.com');
+            console.log(response);
 
             const data = await response.json();
             // Assuming the API returns a token upon successful login
