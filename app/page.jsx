@@ -3,12 +3,12 @@ import Input from "@/components/Input";
 import Image from "next/image";
 
 export default function Home() {
-    return <main className="w-full h-screen ">
+    return <main className="w-full ">
         <div className="w-full h-72 bg-cover bg-center bg-blend-multiply bg-slate-500/50 mb-[-30px]" style={{ backgroundImage: `url('/bgmap.png')` }} />
 
         <div className="w-3/5 mx-auto bg-white rounded-md shadow-lg p-8 gap-6 text-center flex flex-col">
             <div className="w-full flex flex-row gap-5  text-gray-400 child-hover:text-black font-semibold child:transition-all">
-                <p className="text-black">Pesquisar imóveis</p>
+                <p className="text-black">Pesquisar Endereços</p>
                 <p>Histórico</p>
                 <p>Favoritos</p>
             </div>

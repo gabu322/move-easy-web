@@ -157,7 +157,7 @@ export default function Input({
     }
 
     return <div
-        className={`relative outline outline-1 outline-offset-[-1px] rounded transition box-border bg-white flex items-center hover:outline-blue-500 h-10 ${(isFocused ? " outline-blue-500 outline-2 " : "outline-gray-300")}  ${className} `}
+        className={`relative outline outline-1 outline-offset-[-1px] rounded transition box-border bg-white flex items-center hover:outline-blue-500 h-10 ${(isFocused ? " outline-blue-500 outline-2 " : "outline-gray-300")} ${underText ? "mb-4" : ""} ${className} `}
         name={value}
         onFocus={() => setIsFocused(true)}
         onBlur={() => {
@@ -187,7 +187,7 @@ export default function Input({
         </label>
 
         {/* Under text component */}
-        {underText && <div className="pt-0.5 text-xs text-left text-gray-400">{underText}</div>}
+        {underText && <div className="absolute bottom-[-18px] text-xs text-left text-gray-400">{underText}</div>}
     </div>
 
 }
