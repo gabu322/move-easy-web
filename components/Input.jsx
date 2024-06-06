@@ -172,11 +172,11 @@ export default function Input({
 
         {/* Label component */}
         <label htmlFor={htmlFor}
-            className={`absolute left-2 transition-all bg-white rounded whitespace-nowrap font-medium z-10  +
+            className={`absolute left-2 transition-all bg-white rounded whitespace-nowrap font-medium z-10
                 ${((isFocused || value || correctLabel)
                     ? (' -top-2 text-xs px-1')
                     : (" top-2 text-base")
-                )} +
+                )}
                 ${isFocused
                     ? ' text-blue-500'
                     : ' text-gray-400'
