@@ -26,6 +26,7 @@ export default function RootLayout({ children }) {
             window.location.href = '/login';
 
     } ,[]);
+
     return (
         <html lang="en">
             <body className={inter.className}>
