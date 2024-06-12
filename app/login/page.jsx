@@ -57,7 +57,7 @@ export default function Page() {
                 <hr className="flex-grow" />
             </div>
 
-            <Button className="text-gray-500"><Link href="/signup">Criar conta</Link></Button>
+            <Button className="text-gray-500"><Link href="/register">Criar conta</Link></Button>
         </form>
     </main>;
 }
