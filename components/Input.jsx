@@ -69,10 +69,10 @@ export default function Input({
     if (isSearchable && options && options.length > 0) {
         input = (
             <div
-                className="z-4"
+                className="z-4 grow"
             >
                 <input {...commonAttributes}
-                    className={`${commonAttributes.className} + h-full`}
+                    className={`${commonAttributes.className} + h-full w-full`}
                     autoComplete="off"
                 />
                 <div className={"absolute top-full translate-y-[-1px] left-0 w-full bg-white border border-gray-300 rounded-b max-h-60 overflow-y-auto transition-all z-10 " +
@@ -83,9 +83,10 @@ export default function Input({
                     {options.filter(option => option.name.toLowerCase().includes((value || '').toLowerCase())).map((option) => {
                         return <div
                             key={option.id}
-                            className={"p-2  transition cursor-pointer" +
-                                (isFocused && !option.disabled ? " pointer-events-auto" : " pointer-events-none") +
-                                (option.disabled ? " opacity-60 bg-gray-100" : " hover:bg-gray-200")}
+                            className={`p-2 text-left transition cursor-pointer
+                                ${isFocused && !option.disabled ? "pointer-events-auto" : "pointer-events-none"}
+                                ${option.disabled ? "opacity-60 bg-gray-100" : "hover:bg-gray-200"}
+                            `}
                             onClick={() => {
                                 if (option.disabled) return;
                                 handleInputChange({ target: { value: option.name } });

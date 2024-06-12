@@ -1,8 +1,25 @@
+'use client';
+
 import Button from "@/components/Button";
 import Input from "@/components/Input";
-import Image from "next/image";
+import axios from 'axios';
+import { useEffect, useState } from "react";
 
 export default function Home() {
+    const [cities, setCities] = useState([
+        // cep -> id
+        // cidade -> nome
+
+    ]);
+    const [selectedCity, setSelectedCity] = useState(null);
+
+    useEffect(() => {
+        axios.get('https://2877dc96-4217-4253-aea6-c6af53b7d981.mock.pstmn.io/api/info/es').then((res) => {
+            setCities(res.data.data);
+            console.log(res.data);
+        });
+
+    }, []);
     return <main className="w-full ">
         <div className="w-full h-72 bg-cover bg-center bg-blend-multiply bg-slate-500/50 mb-[-30px]" style={{ backgroundImage: `url('/bgmap.png')` }} />
 
@@ -16,8 +33,17 @@ export default function Home() {
                 <Input
                     label="Digite o endereço"
                     className={"grow"}
+                    type="options"
+                    options={cities?.map((city) => ({ id: city.cep, name: city.cidade }))}
+                    value={selectedCity}
+                    onChange={(e) => setSelectedCity(e.target.name)}
+                    isSearchable
                 />
                 <Button
+                //On click, route to to /search?cep=selectedCity
+                    onClick={() => {
+                        window.location.href = `/search?cep=${selectedCity}`;
+                    }}
                 >Pesquisar</Button>
             </div>
         </div>

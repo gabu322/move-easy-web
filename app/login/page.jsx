@@ -1,38 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from "next/image"
 import Link from "next/link"
 import Input from "@/components/Input"
 import Button from "@/components/Button"
 import { useRouter } from 'next/navigation';
+import axios from 'axios';
 
 export default function Page() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const router = useRouter();
 
     const handleLogin = async () => {
         try {
-            console.log("Teste")
-            // Call your API to authenticate user
-            const response = await axios.post('/api/users?email=email@gmail.com');
-            console.log(response);
+            const response = await axios.post('/api/users/login', { email, password });
 
-            const data = await response.json();
-            // Assuming the API returns a token upon successful login
-            if (data.token) {
-                // Save username and token in localStorage or sessionStorage
-                localStorage.setItem('username', username);
-                localStorage.setItem('token', data.token);
-                // Redirect user to home page or any other protected route
-                router.push('/');
-            } else {
-                // Handle login error
-                console.error('Login failed');
+            if (response.status == 200) {
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('email', email);
+                window.location.href = '/';
             }
         } catch (error) {
-            console.error('Error logging in:', error);
+            console.error(error);
         }
     };
 
@@ -45,10 +36,10 @@ export default function Page() {
 
             <h1 className="text-4xl">Login</h1>
             <Input
-                label="Username"
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+                label="Email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
             />
             <Input
                 name="password"
